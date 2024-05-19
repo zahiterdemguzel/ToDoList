@@ -56,10 +56,6 @@ class ToDoListApp(QWidget):
         self.deleteButton.clicked.connect(self.deleteTask)
         self.buttonLayout.addWidget(self.deleteButton)
 
-        self.markCompleteButton = QPushButton("Mark as Completed", self)
-        self.markCompleteButton.clicked.connect(self.markAsCompleted)
-        self.buttonLayout.addWidget(self.markCompleteButton)
-
         self.filterComboBox = QComboBox(self)
         self.filterComboBox.addItems(
             ["All", "Completed", "Not Completed", "High Priority"]
@@ -129,12 +125,6 @@ class ToDoListApp(QWidget):
         selectedItem = self.taskList.currentItem()
         if selectedItem:
             self.taskManager.deleteTask(selectedItem)
-
-    def markAsCompleted(self):
-        selectedItem = self.taskList.currentItem()
-        if selectedItem:
-            self.taskManager.markAsCompleted(selectedItem)
-            self.filterSortManager.sortTasks()
 
     def searchTasks(self):
         searchText = self.searchBar.text().lower()
