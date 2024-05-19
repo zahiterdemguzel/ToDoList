@@ -28,6 +28,11 @@ class TaskManager:
         self.setItemColor(item, priority)
         self.saveTasks()
 
+        # Connect checkbox state change to update task completion status
+        widget.completedCheckbox.stateChanged.connect(
+            lambda state, item=item: self.updateTaskCompletion(item, state)
+        )
+
     def editTask(self, selectedItem, taskData):
         selectedItem.setData(Qt.UserRole, taskData)
         widget = TaskItemWidget(
@@ -41,6 +46,11 @@ class TaskManager:
         self.taskList.setItemWidget(selectedItem, widget)
         self.setItemColor(selectedItem, taskData["priority"])
         self.saveTasks()
+
+        # Connect checkbox state change to update task completion status
+        widget.completedCheckbox.stateChanged.connect(
+            lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
+        )
 
     def deleteTask(self, selectedItem):
         self.taskList.takeItem(self.taskList.row(selectedItem))
@@ -59,6 +69,18 @@ class TaskManager:
         )
         selectedItem.setSizeHint(widget.sizeHint())
         self.taskList.setItemWidget(selectedItem, widget)
+        self.setItemColor(selectedItem, taskData["priority"])
+        self.saveTasks()
+
+        # Connect checkbox state change to update task completion status
+        widget.completedCheckbox.stateChanged.connect(
+            lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
+        )
+
+    def updateTaskCompletion(self, item, state):
+        taskData = item.data(Qt.UserRole)
+        taskData["completed"] = state == Qt.Checked
+        item.setData(Qt.UserRole, taskData)
         self.saveTasks()
 
     def setItemColor(self, item, priority):
@@ -93,3 +115,8 @@ class TaskManager:
             self.taskList.addItem(item)
             self.taskList.setItemWidget(item, widget)
             self.setItemColor(item, taskData["priority"])
+
+            # Connect checkbox state change to update task completion status
+            widget.completedCheckbox.stateChanged.connect(
+                lambda state, item=item: self.updateTaskCompletion(item, state)
+            )
