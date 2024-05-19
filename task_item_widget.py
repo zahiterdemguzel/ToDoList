@@ -13,15 +13,25 @@ from PyQt5.QtGui import QFont
 
 class TaskItemWidget(QWidget):
     def __init__(
-        self, taskText, dueDate, dueTime, priority, category, completed, description=""
-    ):  # Include dueTime and category
+        self,
+        taskText,
+        dueDate,
+        dueTime,
+        priority,
+        category,
+        completed,
+        description="",
+        taskManager=None,
+        listItem=None,
+    ):
         super().__init__()
+
+        self.taskManager = taskManager
+        self.listItem = listItem  # Ensure listItem is stored
 
         # Set padding for the widget
         self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(
-            10, 10, 10, 10
-        )  # Add padding around the entire widget
+        self.layout.setContentsMargins(10, 10, 10, 10)
         self.layout.setSpacing(15)
 
         self.headerLayout = QHBoxLayout()
@@ -33,7 +43,6 @@ class TaskItemWidget(QWidget):
 
         # Reduce checkbox size
         self.completedCheckbox.setFixedSize(20, 20)
-        # set size policy of checkbox to minimum
         self.completedCheckbox.setSizePolicy(
             QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         )
@@ -43,11 +52,9 @@ class TaskItemWidget(QWidget):
         taskFont.setBold(True)
         self.taskLabel.setFont(taskFont)
 
-        self.dueDateLabel = QLabel(
-            f"Due: {dueDate} - {dueTime.toString('HH:mm')}"
-        )  # Display due time in HH:mm format
+        self.dueDateLabel = QLabel(f"Due: {dueDate} - {dueTime.toString('HH:mm')}")
         self.priorityLabel = QLabel(f"Priority: {priority}")
-        self.categoryLabel = QLabel(f"Category: {category}")  # Display category
+        self.categoryLabel = QLabel(f"Category: {category}")
 
         # Increase tooltip font size
         if description:
@@ -59,13 +66,12 @@ class TaskItemWidget(QWidget):
 
         # Adjust spacing between checkbox and text
         self.headerLayout.addWidget(self.completedCheckbox)
-        self.headerLayout.addSpacing(5)  # Add a small space between checkbox and text
+        self.headerLayout.addSpacing(5)
 
-        # Align the task label to the left
         self.headerLayout.addWidget(self.taskLabel)
         self.headerLayout.addWidget(self.dueDateLabel)
         self.headerLayout.addWidget(self.priorityLabel)
-        self.headerLayout.addWidget(self.categoryLabel)  # Add to layout
+        self.headerLayout.addWidget(self.categoryLabel)
 
         self.layout.addLayout(self.headerLayout)
         self.setLayout(self.layout)
@@ -79,7 +85,7 @@ class TaskItemWidget(QWidget):
         setStrikeThrough(self.taskLabel)
         setStrikeThrough(self.dueDateLabel)
         setStrikeThrough(self.priorityLabel)
-        setStrikeThrough(self.categoryLabel)  # Apply to category label
+        setStrikeThrough(self.categoryLabel)
 
     def removeStrikeThrough(self):
         def removeStrike(label):
@@ -90,10 +96,16 @@ class TaskItemWidget(QWidget):
         removeStrike(self.taskLabel)
         removeStrike(self.dueDateLabel)
         removeStrike(self.priorityLabel)
-        removeStrike(self.categoryLabel)  # Remove from category label
+        removeStrike(self.categoryLabel)
 
     def onCheckboxStateChanged(self, state):
         if state == Qt.Checked:
             self.applyStrikeThrough()
         else:
             self.removeStrikeThrough()
+
+        # Ensure listItem reference is used correctly
+        if self.listItem is not None:
+            self.taskManager.updateTaskCompletion(self.listItem, state == Qt.Checked)
+        else:
+            print("No reference to list item found")

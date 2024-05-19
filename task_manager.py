@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QListWidget, QListWidgetItem
+from PyQt5.QtWidgets import QListWidgetItem
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from task_item_widget import TaskItemWidget
@@ -19,10 +19,18 @@ class TaskManager:
         priority,
         category,
         completed=False,
-    ):  # Include dueTime and category
+    ):
         item = QListWidgetItem()
         widget = TaskItemWidget(
-            taskText, dueDate, dueTime, priority, category, completed, description
+            taskText,
+            dueDate,
+            dueTime,
+            priority,
+            category,
+            completed,
+            description,
+            taskManager=self,
+            listItem=item,  # Ensure listItem is passed
         )
         item.setSizeHint(widget.sizeHint())
         item.setData(
@@ -30,9 +38,9 @@ class TaskManager:
             {
                 "taskText": taskText,
                 "dueDate": dueDate,
-                "dueTime": dueTime,  # Include dueTime
+                "dueTime": dueTime,
                 "priority": priority,
-                "category": category,  # Include category
+                "category": category,
                 "completed": completed,
                 "description": description,
             },
@@ -42,75 +50,46 @@ class TaskManager:
         self.setItemColor(item, priority)
         self.saveTasks()
 
-        # Connect checkbox state change to update task completion status
-        widget.completedCheckbox.stateChanged.connect(
-            lambda state, item=item: self.updateTaskCompletion(item, state)
-        )
-
-        if self.filterSortManager:
-            self.filterSortManager.sortAndFilterTasks()
-
     def editTask(self, selectedItem, taskData):
         selectedItem.setData(Qt.UserRole, taskData)
         widget = TaskItemWidget(
             taskData["taskText"],
             taskData["dueDate"],
-            taskData["dueTime"],  # Include dueTime
+            taskData["dueTime"],
             taskData["priority"],
-            taskData["category"],  # Include category
+            taskData["category"],
             taskData["completed"],
             taskData["description"],
+            taskManager=self,
+            listItem=selectedItem,  # Ensure listItem is passed
         )
         selectedItem.setSizeHint(widget.sizeHint())
         self.taskList.setItemWidget(selectedItem, widget)
         self.setItemColor(selectedItem, taskData["priority"])
         self.saveTasks()
 
-        # Connect checkbox state change to update task completion status
-        widget.completedCheckbox.stateChanged.connect(
-            lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
-        )
+    def updateTaskCompletion(self, item, completed):
+        print(f"Updating task completion: {completed}")
+        taskData = item.data(Qt.UserRole)
+        taskData["completed"] = completed
+        item.setData(Qt.UserRole, taskData)
 
-        if self.filterSortManager:
-            self.filterSortManager.sortAndFilterTasks()
-
-    def deleteTask(self, selectedItem):
-        self.taskList.takeItem(self.taskList.row(selectedItem))
-        self.saveTasks()
-
-        if self.filterSortManager:
-            self.filterSortManager.sortAndFilterTasks()
-
-    def markAsCompleted(self, selectedItem):
-        taskData = selectedItem.data(Qt.UserRole)
-        taskData["completed"] = not taskData["completed"]
-        selectedItem.setData(Qt.UserRole, taskData)
+        # Update the widget for the task item
         widget = TaskItemWidget(
             taskData["taskText"],
             taskData["dueDate"],
-            taskData["dueTime"],  # Include dueTime
+            taskData["dueTime"],
             taskData["priority"],
-            taskData["category"],  # Include category
+            taskData["category"],
             taskData["completed"],
             taskData["description"],
+            taskManager=self,
+            listItem=item,
         )
-        selectedItem.setSizeHint(widget.sizeHint())
-        self.taskList.setItemWidget(selectedItem, widget)
-        self.setItemColor(selectedItem, taskData["priority"])
-        self.saveTasks()
+        item.setSizeHint(widget.sizeHint())
+        self.taskList.setItemWidget(item, widget)
+        self.setItemColor(item, taskData["priority"])
 
-        # Connect checkbox state change to update task completion status
-        widget.completedCheckbox.stateChanged.connect(
-            lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
-        )
-
-        if self.filterSortManager:
-            self.filterSortManager.sortAndFilterTasks()
-
-    def updateTaskCompletion(self, item, state):
-        taskData = item.data(Qt.UserRole)
-        taskData["completed"] = state == Qt.Checked
-        item.setData(Qt.UserRole, taskData)
         self.saveTasks()
 
         if self.filterSortManager:
@@ -139,22 +118,19 @@ class TaskManager:
             widget = TaskItemWidget(
                 taskData["taskText"],
                 taskData["dueDate"],
-                taskData["dueTime"],  # Include dueTime
+                taskData["dueTime"],
                 taskData["priority"],
-                taskData["category"],  # Include category
+                taskData["category"],
                 taskData["completed"],
                 taskData["description"],
+                taskManager=self,
+                listItem=item,
             )
             item.setSizeHint(widget.sizeHint())
             item.setData(Qt.UserRole, taskData)
             self.taskList.addItem(item)
             self.taskList.setItemWidget(item, widget)
             self.setItemColor(item, taskData["priority"])
-
-            # Connect checkbox state change to update task completion status
-            widget.completedCheckbox.stateChanged.connect(
-                lambda state, item=item: self.updateTaskCompletion(item, state)
-            )
 
         if self.filterSortManager:
             self.filterSortManager.sortAndFilterTasks()

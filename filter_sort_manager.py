@@ -6,10 +6,11 @@ import sys
 
 
 class FilterSortManager:
-    def __init__(self, taskList, filterComboBox, sortComboBox):
+    def __init__(self, taskList, filterComboBox, sortComboBox, taskManager):
         self.taskList = taskList
         self.filterComboBox = filterComboBox
         self.sortComboBox = sortComboBox
+        self.taskManager = taskManager
 
     def filterTasks(self):
         filterText = self.filterComboBox.currentText()
@@ -59,6 +60,8 @@ class FilterSortManager:
                 taskData["category"],  # Include category
                 taskData["completed"],
                 taskData["description"],
+                taskManager=self.taskManager,
+                listItem=newItem,
             )
             newItem.setSizeHint(widget.sizeHint())
             self.taskList.addItem(newItem)

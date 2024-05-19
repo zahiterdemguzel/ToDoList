@@ -3,32 +3,14 @@
         "category": "",
         "completed": false,
         "description": "",
-        "dueDate": "2024-05-02",
-        "dueTime": "00:00",
-        "priority": "Low",
-        "taskText": "aaaaa"
-    },
-    {
-        "category": "",
-        "completed": false,
-        "description": "",
         "dueDate": "2024-05-19",
         "dueTime": "00:00",
         "priority": "Medium",
         "taskText": "bbb"
     },
     {
-        "category": "",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-19",
-        "dueTime": "00:05",
-        "priority": "Low",
-        "taskText": "sds"
-    },
-    {
         "category": "personal",
-        "completed": false,
+        "completed": true,
         "description": "sdsad\nsad\nsad\nsad\nsa\n",
         "dueDate": "2024-06-07",
         "dueTime": "15:00",
