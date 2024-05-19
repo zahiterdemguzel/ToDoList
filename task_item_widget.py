@@ -34,14 +34,23 @@ class TaskItemWidget(QWidget):
             QToolTip.setFont(QFont("SansSerif", 12))
             self.setToolTip(description)
 
-        if completed:
-            font = self.taskLabel.font()
-            font.setStrikeOut(True)
-            self.taskLabel.setFont(font)
-
         self.headerLayout.addWidget(self.taskLabel)
         self.headerLayout.addWidget(self.dueDateLabel)
         self.headerLayout.addWidget(self.priorityLabel)
 
         self.layout.addLayout(self.headerLayout)
         self.setLayout(self.layout)
+
+        # Apply strike-through effect if the task is completed
+        if completed:
+            self.applyStrikeThrough()
+
+    def applyStrikeThrough(self):
+        def setStrikeThrough(label):
+            font = label.font()
+            font.setStrikeOut(True)
+            label.setFont(font)
+
+        setStrikeThrough(self.taskLabel)
+        setStrikeThrough(self.dueDateLabel)
+        setStrikeThrough(self.priorityLabel)
