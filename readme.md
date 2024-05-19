@@ -81,5 +81,5 @@ This project is not licenced.
 
 ## Contact
 
-For any questions or feedback, please contact [zahit14724@gmail.com]
+For any questions or feedback, please contact [zahit14724@gmail.com](mailto:zahit14724@gmail.com)
 
