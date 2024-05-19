@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QTextEdit,
     QDateEdit,
+    QTimeEdit,  # Import QTimeEdit
     QComboBox,
     QHBoxLayout,
     QPushButton,
@@ -23,8 +24,10 @@ class TaskDialog(QDialog):
         self.descriptionInput = QTextEdit(self)
         self.dueDateEdit = QDateEdit(QDate.currentDate(), self)
         self.dueDateEdit.setCalendarPopup(True)
+        self.dueTimeEdit = QTimeEdit(self)  # Add time input
         self.priorityComboBox = QComboBox(self)
         self.priorityComboBox.addItems(["Low", "Medium", "High"])
+        self.categoryInput = QLineEdit(self)  # Add category input
 
         if taskData:
             self.taskInput.setText(taskData["taskText"])
@@ -32,7 +35,11 @@ class TaskDialog(QDialog):
             self.dueDateEdit.setDate(
                 QDate.fromString(taskData["dueDate"], "yyyy-MM-dd")
             )
+            self.dueTimeEdit.setTime(taskData["dueTime"])  # Set time if available
             self.priorityComboBox.setCurrentText(taskData["priority"])
+            self.categoryInput.setText(
+                taskData["category"]
+            )  # Set category if available
             self.completedCheckbox = QComboBox(self)
             self.completedCheckbox.addItems(["Not Completed", "Completed"])
             self.completedCheckbox.setCurrentText(
@@ -43,7 +50,9 @@ class TaskDialog(QDialog):
         formLayout.addRow("Task:", self.taskInput)
         formLayout.addRow("Description:", self.descriptionInput)
         formLayout.addRow("Due Date:", self.dueDateEdit)
+        formLayout.addRow("Due Time:", self.dueTimeEdit)  # Add to form layout
         formLayout.addRow("Priority:", self.priorityComboBox)
+        formLayout.addRow("Category:", self.categoryInput)  # Add to form layout
 
         buttonLayout = QHBoxLayout()
         self.addButton = QPushButton("Add" if taskData is None else "Save", self)
@@ -62,7 +71,9 @@ class TaskDialog(QDialog):
             "taskText": self.taskInput.text(),
             "description": self.descriptionInput.toPlainText(),
             "dueDate": self.dueDateEdit.date().toString("yyyy-MM-dd"),
+            "dueTime": self.dueTimeEdit.time(),  # Include time
             "priority": self.priorityComboBox.currentText(),
+            "category": self.categoryInput.text(),  # Include category
         }
         if hasattr(self, "completedCheckbox"):
             taskData["completed"] = self.completedCheckbox.currentText() == "Completed"

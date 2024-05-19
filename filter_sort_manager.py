@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidgetItem
 from task_item_widget import TaskItemWidget
 from task_manager import TaskManager
+import sys
 
 
 class FilterSortManager:
@@ -12,9 +13,12 @@ class FilterSortManager:
 
     def filterTasks(self):
         filterText = self.filterComboBox.currentText()
+        print(f"Filtering tasks with filter: {filterText}")
+
         for i in range(self.taskList.count()):
             item = self.taskList.item(i)
             taskData = item.data(Qt.UserRole)
+
             if filterText == "All":
                 item.setHidden(False)
             elif filterText == "Completed" and taskData["completed"]:
@@ -36,7 +40,9 @@ class FilterSortManager:
         if sortText == "Sort by Name":
             tasks.sort(key=lambda x: x[1]["taskText"])
         elif sortText == "Sort by Date":
-            tasks.sort(key=lambda x: x[1]["dueDate"])
+            tasks.sort(
+                key=lambda x: (x[1]["dueDate"], x[1]["dueTime"].toString("HH:mm"))
+            )  # Sort by date and time
         elif sortText == "Sort by Priority":
             priority_order = {"High": 0, "Medium": 1, "Low": 2}
             tasks.sort(key=lambda x: priority_order[x[1]["priority"]])
@@ -48,7 +54,9 @@ class FilterSortManager:
             widget = TaskItemWidget(
                 taskData["taskText"],
                 taskData["dueDate"],
+                taskData["dueTime"],  # Include dueTime
                 taskData["priority"],
+                taskData["category"],  # Include category
                 taskData["completed"],
                 taskData["description"],
             )
@@ -56,3 +64,9 @@ class FilterSortManager:
             self.taskList.addItem(newItem)
             self.taskList.setItemWidget(newItem, widget)
             TaskManager(self.taskList).setItemColor(newItem, taskData["priority"])
+
+        self.filterTasks()  # Ensure tasks are filtered after sorting
+
+    def sortAndFilterTasks(self):
+        self.sortTasks()
+        self.filterTasks()

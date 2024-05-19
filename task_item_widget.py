@@ -12,7 +12,9 @@ from PyQt5.QtGui import QFont
 
 
 class TaskItemWidget(QWidget):
-    def __init__(self, taskText, dueDate, priority, completed, description=""):
+    def __init__(
+        self, taskText, dueDate, dueTime, priority, category, completed, description=""
+    ):  # Include dueTime and category
         super().__init__()
 
         # Set padding for the widget
@@ -31,14 +33,21 @@ class TaskItemWidget(QWidget):
 
         # Reduce checkbox size
         self.completedCheckbox.setFixedSize(20, 20)
+        # set size policy of checkbox to minimum
+        self.completedCheckbox.setSizePolicy(
+            QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        )
 
         self.taskLabel = QLabel(taskText)
         taskFont = self.taskLabel.font()
         taskFont.setBold(True)
         self.taskLabel.setFont(taskFont)
 
-        self.dueDateLabel = QLabel(f"Due: {dueDate}")
+        self.dueDateLabel = QLabel(
+            f"Due: {dueDate} - {dueTime.toString('HH:mm')}"
+        )  # Display due time in HH:mm format
         self.priorityLabel = QLabel(f"Priority: {priority}")
+        self.categoryLabel = QLabel(f"Category: {category}")  # Display category
 
         # Increase tooltip font size
         if description:
@@ -56,6 +65,7 @@ class TaskItemWidget(QWidget):
         self.headerLayout.addWidget(self.taskLabel)
         self.headerLayout.addWidget(self.dueDateLabel)
         self.headerLayout.addWidget(self.priorityLabel)
+        self.headerLayout.addWidget(self.categoryLabel)  # Add to layout
 
         self.layout.addLayout(self.headerLayout)
         self.setLayout(self.layout)
@@ -69,6 +79,7 @@ class TaskItemWidget(QWidget):
         setStrikeThrough(self.taskLabel)
         setStrikeThrough(self.dueDateLabel)
         setStrikeThrough(self.priorityLabel)
+        setStrikeThrough(self.categoryLabel)  # Apply to category label
 
     def removeStrikeThrough(self):
         def removeStrike(label):
@@ -79,6 +90,7 @@ class TaskItemWidget(QWidget):
         removeStrike(self.taskLabel)
         removeStrike(self.dueDateLabel)
         removeStrike(self.priorityLabel)
+        removeStrike(self.categoryLabel)  # Remove from category label
 
     def onCheckboxStateChanged(self, state):
         if state == Qt.Checked:

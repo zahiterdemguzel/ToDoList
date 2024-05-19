@@ -8,17 +8,31 @@ from utils import saveTasks, loadTasks
 class TaskManager:
     def __init__(self, taskList):
         self.taskList = taskList
+        self.filterSortManager = None  # To be set by ToDoListApp
 
-    def addTask(self, taskText, description, dueDate, priority, completed=False):
+    def addTask(
+        self,
+        taskText,
+        description,
+        dueDate,
+        dueTime,
+        priority,
+        category,
+        completed=False,
+    ):  # Include dueTime and category
         item = QListWidgetItem()
-        widget = TaskItemWidget(taskText, dueDate, priority, completed, description)
+        widget = TaskItemWidget(
+            taskText, dueDate, dueTime, priority, category, completed, description
+        )
         item.setSizeHint(widget.sizeHint())
         item.setData(
             Qt.UserRole,
             {
                 "taskText": taskText,
                 "dueDate": dueDate,
+                "dueTime": dueTime,  # Include dueTime
                 "priority": priority,
+                "category": category,  # Include category
                 "completed": completed,
                 "description": description,
             },
@@ -33,12 +47,17 @@ class TaskManager:
             lambda state, item=item: self.updateTaskCompletion(item, state)
         )
 
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()
+
     def editTask(self, selectedItem, taskData):
         selectedItem.setData(Qt.UserRole, taskData)
         widget = TaskItemWidget(
             taskData["taskText"],
             taskData["dueDate"],
+            taskData["dueTime"],  # Include dueTime
             taskData["priority"],
+            taskData["category"],  # Include category
             taskData["completed"],
             taskData["description"],
         )
@@ -52,9 +71,15 @@ class TaskManager:
             lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
         )
 
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()
+
     def deleteTask(self, selectedItem):
         self.taskList.takeItem(self.taskList.row(selectedItem))
         self.saveTasks()
+
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()
 
     def markAsCompleted(self, selectedItem):
         taskData = selectedItem.data(Qt.UserRole)
@@ -63,7 +88,9 @@ class TaskManager:
         widget = TaskItemWidget(
             taskData["taskText"],
             taskData["dueDate"],
+            taskData["dueTime"],  # Include dueTime
             taskData["priority"],
+            taskData["category"],  # Include category
             taskData["completed"],
             taskData["description"],
         )
@@ -77,11 +104,17 @@ class TaskManager:
             lambda state, item=selectedItem: self.updateTaskCompletion(item, state)
         )
 
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()
+
     def updateTaskCompletion(self, item, state):
         taskData = item.data(Qt.UserRole)
         taskData["completed"] = state == Qt.Checked
         item.setData(Qt.UserRole, taskData)
         self.saveTasks()
+
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()
 
     def setItemColor(self, item, priority):
         if priority == "High":
@@ -106,7 +139,9 @@ class TaskManager:
             widget = TaskItemWidget(
                 taskData["taskText"],
                 taskData["dueDate"],
+                taskData["dueTime"],  # Include dueTime
                 taskData["priority"],
+                taskData["category"],  # Include category
                 taskData["completed"],
                 taskData["description"],
             )
@@ -120,3 +155,6 @@ class TaskManager:
             widget.completedCheckbox.stateChanged.connect(
                 lambda state, item=item: self.updateTaskCompletion(item, state)
             )
+
+        if self.filterSortManager:
+            self.filterSortManager.sortAndFilterTasks()

@@ -21,14 +21,15 @@ class ToDoListApp(QWidget):
         super().__init__()
         self.initUI()
 
-        # Initialize TaskManager and FilterSortManager after UI components
         self.taskManager = TaskManager(self.taskList)
         self.filterSortManager = FilterSortManager(
             self.taskList, self.filterComboBox, self.sortComboBox
         )
+        self.taskManager.filterSortManager = self.filterSortManager
 
         try:
             self.taskManager.loadTasks()
+            self.filterSortManager.sortAndFilterTasks()  # Sort and filter tasks initially
         except Exception as e:
             print(e)
 
@@ -78,16 +79,9 @@ class ToDoListApp(QWidget):
 
         self.setLayout(self.layout)
 
-        # Set up filter and sort manager after creating combo boxes
-        self.filterSortManager = FilterSortManager(
-            self.taskList, self.filterComboBox, self.sortComboBox
-        )
-
         # Connect combo boxes to their respective functions
-        self.filterComboBox.currentIndexChanged.connect(
-            self.filterSortManager.filterTasks
-        )
-        self.sortComboBox.currentIndexChanged.connect(self.filterSortManager.sortTasks)
+        self.filterComboBox.currentIndexChanged.connect(self.sortAndFilterTasks)
+        self.sortComboBox.currentIndexChanged.connect(self.sortAndFilterTasks)
 
         # Connect the search bar to the search function
         self.searchBar.textChanged.connect(self.searchTasks)
@@ -96,6 +90,9 @@ class ToDoListApp(QWidget):
         # self.saveTimer = QTimer(self)
         # self.saveTimer.timeout.connect(self.taskManager.saveTasks)
         # self.saveTimer.start(60000)
+
+    def sortAndFilterTasks(self):
+        self.filterSortManager.sortAndFilterTasks()
 
     def showAddTaskDialog(self):
         dialog = TaskDialog(self)
@@ -106,10 +103,12 @@ class ToDoListApp(QWidget):
                     taskData["taskText"],
                     taskData["description"],
                     taskData["dueDate"],
+                    taskData["dueTime"],  # Include dueTime
                     taskData["priority"],
+                    taskData["category"],  # Include category
                     taskData["completed"],
                 )
-                self.filterSortManager.sortTasks()
+                self.filterSortManager.sortAndFilterTasks()
 
     def editTask(self, item=None):
         selectedItem = item if item else self.taskList.currentItem()
@@ -119,12 +118,13 @@ class ToDoListApp(QWidget):
             if dialog.exec_() == QDialog.Accepted:
                 updatedTaskData = dialog.getTaskData()
                 self.taskManager.editTask(selectedItem, updatedTaskData)
-                self.filterSortManager.sortTasks()
+                self.filterSortManager.sortAndFilterTasks()
 
     def deleteTask(self):
         selectedItem = self.taskList.currentItem()
         if selectedItem:
             self.taskManager.deleteTask(selectedItem)
+            self.filterSortManager.sortAndFilterTasks()
 
     def searchTasks(self):
         searchText = self.searchBar.text().lower()
@@ -137,3 +137,5 @@ class ToDoListApp(QWidget):
                 item.setHidden(False)
             else:
                 item.setHidden(True)
+
+        self.filterSortManager.sortAndFilterTasks()
