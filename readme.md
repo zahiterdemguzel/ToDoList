@@ -77,9 +77,9 @@ Contributions are welcome! Please fork the repository and create a pull request 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is not licenced.
 
 ## Contact
 
-For any questions or feedback, please contact [yourname@domain.com](mailto:yourname@domain.com).
+For any questions or feedback, please contact [zahit14724@gmail.com]
 
