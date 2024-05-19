@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QLabel,
     QDialog,
+    QLineEdit,
 )
 from PyQt5.QtCore import QTimer
 from task_manager import TaskManager
@@ -36,6 +37,10 @@ class ToDoListApp(QWidget):
         self.setGeometry(300, 300, 700, 600)
 
         self.layout = QVBoxLayout()
+
+        self.searchBar = QLineEdit(self)
+        self.searchBar.setPlaceholderText("Search tasks...")
+        self.layout.addWidget(self.searchBar)
 
         self.buttonLayout = QHBoxLayout()
 
@@ -88,6 +93,9 @@ class ToDoListApp(QWidget):
         )
         self.sortComboBox.currentIndexChanged.connect(self.filterSortManager.sortTasks)
 
+        # Connect the search bar to the search function
+        self.searchBar.textChanged.connect(self.searchTasks)
+
         # Set up timer for auto-saving tasks every 60 seconds
         # self.saveTimer = QTimer(self)
         # self.saveTimer.timeout.connect(self.taskManager.saveTasks)
@@ -127,3 +135,15 @@ class ToDoListApp(QWidget):
         if selectedItem:
             self.taskManager.markAsCompleted(selectedItem)
             self.filterSortManager.sortTasks()
+
+    def searchTasks(self):
+        searchText = self.searchBar.text().lower()
+        for i in range(self.taskList.count()):
+            item = self.taskList.item(i)
+            taskData = item.data(Qt.UserRole)
+            taskText = taskData["taskText"].lower()
+            description = taskData["description"].lower()
+            if searchText in taskText or searchText in description:
+                item.setHidden(False)
+            else:
+                item.setHidden(True)
