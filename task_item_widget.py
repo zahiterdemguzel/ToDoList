@@ -51,8 +51,13 @@ class TaskItemWidget(QWidget):
         taskFont = self.taskLabel.font()
         taskFont.setBold(True)
         self.taskLabel.setFont(taskFont)
+        timeText = (
+            " - " + dueTime.toString("HH:mm")
+            if dueTime.toString("HH:mm") != "00:00"
+            else ""
+        )
 
-        self.dueDateLabel = QLabel(f"Due: {dueDate} - {dueTime.toString('HH:mm')}")
+        self.dueDateLabel = QLabel(f"Due: {dueDate}{timeText}")
         self.priorityLabel = QLabel(f"Priority: {priority}")
         self.categoryLabel = QLabel(f"Category: {category}")
 
