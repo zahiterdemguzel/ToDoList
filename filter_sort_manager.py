@@ -1,17 +1,31 @@
+import json
+import os
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidgetItem
 from task_item_widget import TaskItemWidget
 from task_manager import TaskManager
-import sys
+from configuration_manager import ConfigurationManager
 
 
 class FilterSortManager:
-    def __init__(self, taskList, filterComboBox, sortComboBox, taskManager, searchBar):
+    def __init__(
+        self,
+        taskList,
+        filterComboBox,
+        sortComboBox,
+        taskManager,
+        searchBar,
+        configManager,
+    ):
         self.taskList = taskList
         self.filterComboBox = filterComboBox
         self.sortComboBox = sortComboBox
         self.taskManager = taskManager
         self.searchBar = searchBar
+        self.configManager = configManager
+
+        # Load configuration
+        self.loadConfig()
 
     def filterTasks(self):
         filterText = self.filterComboBox.currentText()
@@ -82,3 +96,14 @@ class FilterSortManager:
     def sortAndFilterTasks(self):
         self.sortTasks()
         self.filterTasks()
+        self.saveConfig()  # Save configuration whenever sorting or filtering is applied
+
+    def saveConfig(self):
+        self.configManager.set("filter", self.filterComboBox.currentText())
+        self.configManager.set("sort", self.sortComboBox.currentText())
+        # self.configManager.set("search", self.searchBar.text())
+
+    def loadConfig(self):
+        self.filterComboBox.setCurrentText(self.configManager.get("filter", "All"))
+        self.sortComboBox.setCurrentText(self.configManager.get("sort", "Sort by Name"))
+        # self.searchBar.setText(self.configManager.get("search", ""))

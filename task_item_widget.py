@@ -31,7 +31,7 @@ class TaskItemWidget(QWidget):
 
         # Set padding for the widget
         self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(10, 10, 10, 10)
+        self.layout.setContentsMargins(10, 20, 10, 20)
         self.layout.setSpacing(15)
 
         self.headerLayout = QHBoxLayout()

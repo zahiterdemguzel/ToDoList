@@ -14,6 +14,7 @@ from task_manager import TaskManager
 from task_dialog import TaskDialog
 from filter_sort_manager import FilterSortManager
 from PyQt5.QtCore import Qt
+from configuration_manager import ConfigurationManager
 
 
 class ToDoListApp(QWidget):
@@ -21,6 +22,7 @@ class ToDoListApp(QWidget):
         super().__init__()
         self.initUI()
 
+        self.configManager = ConfigurationManager()
         self.taskManager = TaskManager(self.taskList)
         self.filterSortManager = FilterSortManager(
             self.taskList,
@@ -28,6 +30,7 @@ class ToDoListApp(QWidget):
             self.sortComboBox,
             self.taskManager,
             self.searchBar,
+            self.configManager,
         )
         self.taskManager.filterSortManager = self.filterSortManager
 
@@ -96,7 +99,8 @@ class ToDoListApp(QWidget):
         # self.saveTimer.start(60000)
 
     def sortAndFilterTasks(self):
-        self.filterSortManager.sortAndFilterTasks()
+        if hasattr(self, "filterSortManager"):
+            self.filterSortManager.sortAndFilterTasks()
 
     def showAddTaskDialog(self):
         dialog = TaskDialog(self)
