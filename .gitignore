@@ -159,3 +159,5 @@ cython_debug/
 #.idea/
 dist/main.exe - Kısayol.lnk
 dist/config.json
+dist/tasks.json
+tasks.json
