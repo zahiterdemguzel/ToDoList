@@ -1,14 +1,5 @@
 [
     {
-        "category": "",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-19",
-        "dueTime": "00:00",
-        "priority": "Medium",
-        "taskText": "bbb"
-    },
-    {
         "category": "personal",
         "completed": true,
         "description": "sdsad\nsad\nsad\nsad\nsa\n",

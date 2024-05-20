@@ -68,6 +68,11 @@ class TaskManager:
         self.setItemColor(selectedItem, taskData["priority"])
         self.saveTasks()
 
+    # deleteTask method
+    def deleteTask(self, selectedItem):
+        self.taskList.takeItem(self.taskList.row(selectedItem))
+        self.saveTasks()
+
     def updateTaskCompletion(self, item, completed):
         print(f"Updating task completion: {completed}")
         taskData = item.data(Qt.UserRole)
