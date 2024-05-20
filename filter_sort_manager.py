@@ -6,28 +6,37 @@ import sys
 
 
 class FilterSortManager:
-    def __init__(self, taskList, filterComboBox, sortComboBox, taskManager):
+    def __init__(self, taskList, filterComboBox, sortComboBox, taskManager, searchBar):
         self.taskList = taskList
         self.filterComboBox = filterComboBox
         self.sortComboBox = sortComboBox
         self.taskManager = taskManager
+        self.searchBar = searchBar
 
     def filterTasks(self):
         filterText = self.filterComboBox.currentText()
-        print(f"Filtering tasks with filter: {filterText}")
+        searchText = self.searchBar.text().lower()
+        print(f"Filtering tasks with filter: {filterText} and searching: {searchText}")
 
         for i in range(self.taskList.count()):
             item = self.taskList.item(i)
             taskData = item.data(Qt.UserRole)
 
-            if filterText == "All":
-                item.setHidden(False)
-            elif filterText == "Completed" and taskData["completed"]:
-                item.setHidden(False)
-            elif filterText == "Not Completed" and not taskData["completed"]:
-                item.setHidden(False)
-            elif filterText == "High Priority" and taskData["priority"] == "High":
-                item.setHidden(False)
+            taskText = taskData["taskText"].lower()
+            description = taskData["description"].lower()
+            tag = taskData["category"].lower()
+
+            if searchText in taskText or searchText in description or searchText in tag:
+                if filterText == "All":
+                    item.setHidden(False)
+                elif filterText == "Completed" and taskData["completed"]:
+                    item.setHidden(False)
+                elif filterText == "Not Completed" and not taskData["completed"]:
+                    item.setHidden(False)
+                elif filterText == "High Priority" and taskData["priority"] == "High":
+                    item.setHidden(False)
+                else:
+                    item.setHidden(True)
             else:
                 item.setHidden(True)
 

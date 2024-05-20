@@ -23,7 +23,11 @@ class ToDoListApp(QWidget):
 
         self.taskManager = TaskManager(self.taskList)
         self.filterSortManager = FilterSortManager(
-            self.taskList, self.filterComboBox, self.sortComboBox, self.taskManager
+            self.taskList,
+            self.filterComboBox,
+            self.sortComboBox,
+            self.taskManager,
+            self.searchBar,
         )
         self.taskManager.filterSortManager = self.filterSortManager
 
