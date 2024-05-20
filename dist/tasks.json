@@ -1,0 +1,47 @@
+[
+    {
+        "category": "a\u015fk",
+        "completed": false,
+        "description": "\u00fcsk\u00fcdar ya da akl\u0131na neresi geliyorsa.\n",
+        "dueDate": "2024-05-21",
+        "dueTime": "16:15",
+        "priority": "High",
+        "taskText": "Fe-zeg date"
+    },
+    {
+        "category": "okul",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "High",
+        "taskText": "Poster Haz\u0131rla, \u00c7\u0131kart"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "taskText": "Fi\u015fleri g\u00f6nder"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-23",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Kai Avatar\u0131"
+    },
+    {
+        "category": "",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-05-20",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "taskText": "\u0130mza at"
+    }
+]
