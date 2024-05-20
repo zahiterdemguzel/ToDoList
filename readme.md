@@ -2,6 +2,9 @@
 
 A simple yet powerful To-Do List application built using Python and PyQt5. This application allows users to manage their tasks efficiently with features such as task addition, editing, deletion, priority setting, and filtering/sorting of tasks. The application also includes functionalities to mark tasks as completed, automatically save/load tasks, and search through tasks.
 
+![image](https://github.com/zahiterdemguzel/ToDoList/assets/37737787/15b73446-53ba-4339-b52a-523cb6c3b892)
+
+
 ## Features
 
 - **Add Tasks:** Create new tasks with a description, due date, and priority.
