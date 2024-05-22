@@ -1,7 +1,7 @@
 [
     {
         "category": "a\u015fk",
-        "completed": false,
+        "completed": true,
         "description": "\u00fcsk\u00fcdar ya da akl\u0131na neresi geliyorsa.\n",
         "dueDate": "2024-05-21",
         "dueTime": "16:15",
@@ -10,21 +10,12 @@
     },
     {
         "category": "okul",
-        "completed": false,
-        "description": "",
+        "completed": true,
+        "description": "Burak\n",
         "dueDate": "2024-05-22",
         "dueTime": "00:00",
         "priority": "High",
-        "taskText": "Poster Haz\u0131rla, \u00c7\u0131kart"
-    },
-    {
-        "category": "i\u015f",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-22",
-        "dueTime": "00:00",
-        "priority": "Low",
-        "taskText": "Fi\u015fleri g\u00f6nder"
+        "taskText": "Poster \u00c7\u0131kart"
     },
     {
         "category": "i\u015f",
@@ -36,6 +27,51 @@
         "taskText": "Kai Avatar\u0131"
     },
     {
+        "category": "i\u015f",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-05-21",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Winlaunch UI"
+    },
+    {
+        "category": "i\u015f",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Winlaunch Settings"
+    },
+    {
+        "category": "",
+        "completed": false,
+        "description": "for add,\nremove,edit contacts",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Winlaunch UI "
+    },
+    {
+        "category": "",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-06-07",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Kids Project Debug"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "taskText": "Fi\u015fleri g\u00f6nder"
+    },
+    {
         "category": "",
         "completed": true,
         "description": "",
@@ -43,5 +79,14 @@
         "dueTime": "00:00",
         "priority": "Low",
         "taskText": "\u0130mza at"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-21",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "taskText": "Scoreboard Unity"
     }
 ]
