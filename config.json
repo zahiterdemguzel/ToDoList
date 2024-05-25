@@ -1,4 +1,12 @@
 {
     "filter": "Not Completed",
-    "sort": "Sort by Name"
+    "sort": "Sort by Name",
+    "mediumPriorityColor": "#a5fff5",
+    "highPriorityColor": "#ffc157",
+    "highlightDeadline": false,
+    "dayRange": 1,
+    "dueDateVisibility": true,
+    "dueTimeVisibility": true,
+    "categoryVisibility": true,
+    "priorityVisibility": true
 }

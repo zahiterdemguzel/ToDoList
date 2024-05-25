@@ -15,6 +15,9 @@ from task_dialog import TaskDialog
 from filter_sort_manager import FilterSortManager
 from PyQt5.QtCore import Qt
 from configuration_manager import ConfigurationManager
+from PyQt5.QtGui import QIcon
+
+from settings_dialog import SettingsDialog  # Make sure to import the new dialog
 
 
 class ToDoListApp(QWidget):
@@ -76,12 +79,17 @@ class ToDoListApp(QWidget):
         self.buttonLayout.addWidget(QLabel("Sort:"))
         self.buttonLayout.addWidget(self.sortComboBox)
 
+        self.settingsButton = QPushButton("", self)
+        self.settingsButton.setIcon(QIcon("Resources/settings.png"))
+        self.settingsButton.clicked.connect(self.showSettingsDialog)
+
+        self.buttonLayout.addWidget(self.settingsButton)
+
         self.layout.addLayout(self.buttonLayout)
 
         self.taskList = QListWidget(self)
-        self.taskList.itemDoubleClicked.connect(
-            self.editTask
-        )  # Connect double-click event to editTask method
+        self.taskList.itemDoubleClicked.connect(self.editTask)
+
         self.layout.addWidget(self.taskList)
 
         self.setLayout(self.layout)
@@ -93,10 +101,14 @@ class ToDoListApp(QWidget):
         # Connect the search bar to the search function
         self.searchBar.textChanged.connect(self.searchTasks)
 
-        # Set up timer for auto-saving tasks every 60 seconds
-        # self.saveTimer = QTimer(self)
-        # self.saveTimer.timeout.connect(self.taskManager.saveTasks)
-        # self.saveTimer.start(60000)
+    def showSettingsDialog(self):
+        dialog = SettingsDialog(self.configManager, self)
+        dialog.exec_()
+        self.applySettings()  # Apply settings after dialog is closed
+
+    def applySettings(self):
+        # You can add your logic here to apply the settings to the application
+        print("Settings applied")
 
     def sortAndFilterTasks(self):
         if hasattr(self, "filterSortManager"):

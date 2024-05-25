@@ -1,0 +1,9 @@
+{
+    "highPriorityColor": "#ffffff",
+    "highlightDeadline": false,
+    "dayRange": 2,
+    "dueDateVisibility": false,
+    "dueTimeVisibility": true,
+    "categoryVisibility": true,
+    "priorityVisibility": true
+}

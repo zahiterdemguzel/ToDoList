@@ -18,13 +18,13 @@
         "taskText": "Poster \u00c7\u0131kart"
     },
     {
-        "category": "i\u015f",
+        "category": "",
         "completed": false,
         "description": "",
-        "dueDate": "2024-05-23",
+        "dueDate": "2024-05-31",
         "dueTime": "00:00",
-        "priority": "Medium",
-        "taskText": "Kai Avatar\u0131"
+        "priority": "High",
+        "taskText": "Video \u00e7ek okul"
     },
     {
         "category": "i\u015f",
@@ -51,7 +51,7 @@
         "dueDate": "2024-05-22",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Winlaunch UI "
+        "taskText": "Winlaunch people UI "
     },
     {
         "category": "",
@@ -61,6 +61,24 @@
         "dueTime": "00:00",
         "priority": "Medium",
         "taskText": "Kids Project Debug"
+    },
+    {
+        "category": "",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-24",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "taskText": "Emre Abi G\u00f6r\u00fc\u015fme"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-23",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "taskText": "Kai Avatar\u0131"
     },
     {
         "category": "i\u015f",
@@ -88,5 +106,14 @@
         "dueTime": "00:00",
         "priority": "Low",
         "taskText": "Scoreboard Unity"
+    },
+    {
+        "category": "",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-25",
+        "dueTime": "00:00",
+        "priority": "High",
+        "taskText": "Mustafa hocaya poster maili at"
     }
 ]
