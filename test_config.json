@@ -6,5 +6,20 @@
     "dueTimeVisibility": true,
     "categoryVisibility": true,
     "priorityVisibility": true,
-    "enableSidePanel": true
+    "enableSidePanel": true,
+    "enableDoubleClick": true,
+    "enableNotifications": true,
+    "remindHighPriority": true,
+    "remindMediumPriority": false,
+    "remindLowPriority": true,
+    "notificationOffsets": [
+        {
+            "type": "minutes",
+            "value": 3
+        },
+        {
+            "type": "days",
+            "value": 1
+        }
+    ]
 }

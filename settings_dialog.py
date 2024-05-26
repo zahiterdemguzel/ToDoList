@@ -11,6 +11,10 @@ from PyQt5.QtWidgets import (
     QColorDialog,
     QFrame,
     QLabel,
+    QListWidget,
+    QListWidgetItem,
+    QComboBox,
+    QLineEdit,
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
@@ -20,16 +24,21 @@ from configuration_manager import ConfigurationManager
 class SettingsDialog(QDialog):
     DEFAULTS = {
         "enableSidePanel": True,
-        "enableDoubleClick": True,
         "highlightDeadline": False,
         "dayRange": 1,
         "dueDateVisibility": True,
         "dueTimeVisibility": True,
         "categoryVisibility": True,
         "priorityVisibility": True,
+        "enableDoubleClick": True,
         "lowPriorityColor": "#99FF99",
         "mediumPriorityColor": "#FFFF99",
         "highPriorityColor": "#FF9999",
+        "enableNotifications": False,
+        "remindHighPriority": False,
+        "remindMediumPriority": False,
+        "remindLowPriority": False,
+        "notificationOffsets": [],
     }
 
     def __init__(self, configManager, parent=None):
@@ -46,16 +55,19 @@ class SettingsDialog(QDialog):
         self.initTaskListTab()
         self.tabs.addTab(self.taskListTab, "Task List")
 
+        self.initNotificationsTab()
+        self.tabs.addTab(self.notificationsTab, "Notifications")
+
         layout.addWidget(self.tabs)
 
         buttonLayout = QHBoxLayout()
         self.okButton = QPushButton("Ok", self)
         self.cancelButton = QPushButton("Cancel", self)
-        self.applyButton = QPushButton("Apply", self)
         self.resetButton = QPushButton("Reset", self)
+        self.resetButton.setFixedWidth(60)  # Make the reset button smaller
+
         buttonLayout.addWidget(self.okButton)
         buttonLayout.addWidget(self.cancelButton)
-        buttonLayout.addWidget(self.applyButton)
         buttonLayout.addWidget(self.resetButton)
 
         layout.addLayout(buttonLayout)
@@ -64,7 +76,6 @@ class SettingsDialog(QDialog):
 
         self.okButton.clicked.connect(self.applyAndAccept)
         self.cancelButton.clicked.connect(self.reject)
-        self.applyButton.clicked.connect(self.applySettings)
         self.resetButton.clicked.connect(self.resetToDefaults)
 
     def initTaskListTab(self):
@@ -183,8 +194,82 @@ class SettingsDialog(QDialog):
         taskListLayout.addLayout(layout)
         self.taskListTab.setLayout(taskListLayout)
 
+    def initNotificationsTab(self):
+        self.notificationsTab = QWidget()
+        notificationsLayout = QVBoxLayout()
+
+        self.enableNotificationsCheck = QCheckBox("Enable Notifications")
+        self.enableNotificationsCheck.setChecked(
+            self.configManager.get(
+                "enableNotifications", self.DEFAULTS["enableNotifications"]
+            )
+        )
+        self.enableNotificationsCheck.stateChanged.connect(
+            self.toggleNotificationsFrame
+        )
+
+        self.notificationsFrame = QFrame()
+        self.notificationsFrame.setFrameShape(QFrame.StyledPanel)
+        notificationsFrameLayout = QVBoxLayout()
+
+        remindLayout = QHBoxLayout()
+        self.remindHighPriorityCheck = QCheckBox("Remind High Priority")
+        self.remindHighPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindHighPriority", self.DEFAULTS["remindHighPriority"]
+            )
+        )
+        self.remindMediumPriorityCheck = QCheckBox("Remind Medium Priority")
+        self.remindMediumPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindMediumPriority", self.DEFAULTS["remindMediumPriority"]
+            )
+        )
+        self.remindLowPriorityCheck = QCheckBox("Remind Low Priority")
+        self.remindLowPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindLowPriority", self.DEFAULTS["remindLowPriority"]
+            )
+        )
+
+        remindLayout.addWidget(self.remindHighPriorityCheck)
+        remindLayout.addWidget(self.remindMediumPriorityCheck)
+        remindLayout.addWidget(self.remindLowPriorityCheck)
+
+        notificationsFrameLayout.addLayout(remindLayout)
+
+        self.notificationOffsetEditor = QListWidget()
+
+        offsetButtonsLayout = QHBoxLayout()
+        self.offsetTypeCombo = QComboBox()
+        self.offsetTypeCombo.addItems(["minutes", "hours", "days"])
+        self.offsetValueEdit = QLineEdit()
+        self.offsetValueEdit.setPlaceholderText("Offset value")
+        self.addOffsetButton = QPushButton("Add Offset")
+        self.addOffsetButton.clicked.connect(self.addOffset)
+        self.removeOffsetButton = QPushButton("Remove Offset")
+        self.removeOffsetButton.clicked.connect(self.removeOffset)
+
+        offsetButtonsLayout.addWidget(self.offsetTypeCombo)
+        offsetButtonsLayout.addWidget(self.offsetValueEdit)
+        offsetButtonsLayout.addWidget(self.addOffsetButton)
+        offsetButtonsLayout.addWidget(self.removeOffsetButton)
+
+        notificationsFrameLayout.addWidget(QLabel("Notification Offsets:"))
+        notificationsFrameLayout.addWidget(self.notificationOffsetEditor)
+        notificationsFrameLayout.addLayout(offsetButtonsLayout)
+
+        self.notificationsFrame.setLayout(notificationsFrameLayout)
+        notificationsLayout.addWidget(self.enableNotificationsCheck)
+        notificationsLayout.addWidget(self.notificationsFrame)
+
+        self.notificationsTab.setLayout(notificationsLayout)
+
     def toggleDayRange(self, state):
         self.dayRangeSpin.setEnabled(state == Qt.Checked)
+
+    def toggleNotificationsFrame(self, state):
+        self.notificationsFrame.setEnabled(state == Qt.Checked)
 
     def pickColor(self, key):
         initialColor = QColor(self.configManager.get(key, self.DEFAULTS[key]))
@@ -213,6 +298,19 @@ class SettingsDialog(QDialog):
         self.configManager.set(
             "enableDoubleClick", self.enableDoubleClickCheck.isChecked()
         )
+        self.configManager.set(
+            "enableNotifications", self.enableNotificationsCheck.isChecked()
+        )
+        self.configManager.set(
+            "remindHighPriority", self.remindHighPriorityCheck.isChecked()
+        )
+        self.configManager.set(
+            "remindMediumPriority", self.remindMediumPriorityCheck.isChecked()
+        )
+        self.configManager.set(
+            "remindLowPriority", self.remindLowPriorityCheck.isChecked()
+        )
+        self.configManager.set("notificationOffsets", self.getNotificationOffsets())
         self.configManager.saveConfig()  # Ensure settings are saved
 
     def loadSettings(self):
@@ -253,6 +351,32 @@ class SettingsDialog(QDialog):
                 "enableDoubleClick", self.DEFAULTS["enableDoubleClick"]
             )
         )
+        self.enableNotificationsCheck.setChecked(
+            self.configManager.get(
+                "enableNotifications", self.DEFAULTS["enableNotifications"]
+            )
+        )
+        self.remindHighPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindHighPriority", self.DEFAULTS["remindHighPriority"]
+            )
+        )
+        self.remindMediumPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindMediumPriority", self.DEFAULTS["remindMediumPriority"]
+            )
+        )
+        self.remindLowPriorityCheck.setChecked(
+            self.configManager.get(
+                "remindLowPriority", self.DEFAULTS["remindLowPriority"]
+            )
+        )
+        self.setNotificationOffsets(
+            self.configManager.get(
+                "notificationOffsets", self.DEFAULTS["notificationOffsets"]
+            )
+        )
+        self.notificationsFrame.setEnabled(self.enableNotificationsCheck.isChecked())
 
     def resetToDefaults(self):
         self.enableSidePanelCheck.setChecked(self.DEFAULTS["enableSidePanel"])
@@ -263,6 +387,10 @@ class SettingsDialog(QDialog):
         self.categoryCheck.setChecked(self.DEFAULTS["categoryVisibility"])
         self.priorityCheck.setChecked(self.DEFAULTS["priorityVisibility"])
         self.enableDoubleClickCheck.setChecked(self.DEFAULTS["enableDoubleClick"])
+        self.enableNotificationsCheck.setChecked(self.DEFAULTS["enableNotifications"])
+        self.remindHighPriorityCheck.setChecked(self.DEFAULTS["remindHighPriority"])
+        self.remindMediumPriorityCheck.setChecked(self.DEFAULTS["remindMediumPriority"])
+        self.remindLowPriorityCheck.setChecked(self.DEFAULTS["remindLowPriority"])
         self.updateColorLabel(
             self.lowPriorityColorLabel, self.DEFAULTS["lowPriorityColor"]
         )
@@ -272,6 +400,41 @@ class SettingsDialog(QDialog):
         self.updateColorLabel(
             self.highPriorityColorLabel, self.DEFAULTS["highPriorityColor"]
         )
+        self.setNotificationOffsets(self.DEFAULTS["notificationOffsets"])
+        self.notificationsFrame.setEnabled(self.enableNotificationsCheck.isChecked())
+
+    def setNotificationOffsets(self, offsets):
+        self.notificationOffsetEditor.clear()
+        for offset in offsets:
+            item = QListWidgetItem(f"{offset['value']} {offset['type']}")
+            item.setData(Qt.UserRole, offset)
+            self.notificationOffsetEditor.addItem(item)
+
+    def getNotificationOffsets(self):
+        offsets = []
+        for index in range(self.notificationOffsetEditor.count()):
+            item = self.notificationOffsetEditor.item(index)
+            offsets.append(item.data(Qt.UserRole))
+        return offsets
+
+    def addOffset(self):
+        offset_type = self.offsetTypeCombo.currentText()
+        try:
+            offset_value = int(self.offsetValueEdit.text())
+            offset = {"type": offset_type, "value": offset_value}
+            item = QListWidgetItem(f"{offset_value} {offset_type}")
+            item.setData(Qt.UserRole, offset)
+            self.notificationOffsetEditor.addItem(item)
+        except ValueError:
+            pass  # Handle invalid input
+
+    def removeOffset(self):
+        selected_items = self.notificationOffsetEditor.selectedItems()
+        if selected_items:
+            for item in selected_items:
+                self.notificationOffsetEditor.takeItem(
+                    self.notificationOffsetEditor.row(item)
+                )
 
     def applyAndAccept(self):
         self.applySettings()
