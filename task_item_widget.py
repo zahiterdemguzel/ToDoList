@@ -15,7 +15,7 @@ from PyQt5.QtGui import QFont
 class TaskItemWidget(QWidget):
     def __init__(
         self,
-        taskText,
+        title,
         dueDate,
         dueTime,
         priority,
@@ -48,7 +48,7 @@ class TaskItemWidget(QWidget):
             QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         )
 
-        self.taskLabel = QLabel(taskText)
+        self.taskLabel = QLabel(title)
         taskFont = self.taskLabel.font()
         taskFont.setBold(True)
         self.taskLabel.setFont(taskFont)

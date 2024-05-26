@@ -149,9 +149,9 @@ class ToDoListApp(QWidget):
         dialog = TaskDialog(self)
         if dialog.exec_() == QDialog.Accepted:
             taskData = dialog.getTaskData()
-            if taskData["taskText"]:
+            if taskData["title"]:
                 self.taskManager.addTask(
-                    taskData["taskText"],
+                    taskData["title"],
                     taskData["description"],
                     taskData["dueDate"],
                     taskData["dueTime"],  # Include dueTime
@@ -182,9 +182,9 @@ class ToDoListApp(QWidget):
         for i in range(self.taskList.count()):
             item = self.taskList.item(i)
             taskData = item.data(Qt.UserRole)
-            taskText = taskData["taskText"].lower()
+            title = taskData["title"].lower()
             description = taskData["description"].lower()
-            if searchText in taskText or searchText in description:
+            if searchText in title or searchText in description:
                 item.setHidden(False)
             else:
                 item.setHidden(True)

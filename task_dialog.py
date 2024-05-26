@@ -30,7 +30,7 @@ class TaskDialog(QDialog):
         self.categoryInput = QLineEdit(self)  # Add category input
 
         if taskData:
-            self.taskInput.setText(taskData["taskText"])
+            self.taskInput.setText(taskData["title"])
             self.descriptionInput.setText(taskData["description"])
             self.dueDateEdit.setDate(
                 QDate.fromString(taskData["dueDate"], "yyyy-MM-dd")
@@ -68,7 +68,7 @@ class TaskDialog(QDialog):
 
     def getTaskData(self):
         taskData = {
-            "taskText": self.taskInput.text(),
+            "title": self.taskInput.text(),
             "description": self.descriptionInput.toPlainText(),
             "dueDate": self.dueDateEdit.date().toString("yyyy-MM-dd"),
             "dueTime": self.dueTimeEdit.time(),  # Include time

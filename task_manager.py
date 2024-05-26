@@ -12,7 +12,7 @@ class TaskManager:
 
     def addTask(
         self,
-        taskText,
+        title,
         description,
         dueDate,
         dueTime,
@@ -22,7 +22,7 @@ class TaskManager:
     ):
         item = QListWidgetItem()
         widget = TaskItemWidget(
-            taskText,
+            title,
             dueDate,
             dueTime,
             priority,
@@ -36,7 +36,7 @@ class TaskManager:
         item.setData(
             Qt.UserRole,
             {
-                "taskText": taskText,
+                "title": title,
                 "dueDate": dueDate,
                 "dueTime": dueTime,
                 "priority": priority,
@@ -53,7 +53,7 @@ class TaskManager:
     def editTask(self, selectedItem, taskData):
         selectedItem.setData(Qt.UserRole, taskData)
         widget = TaskItemWidget(
-            taskData["taskText"],
+            taskData["title"],
             taskData["dueDate"],
             taskData["dueTime"],
             taskData["priority"],
@@ -81,7 +81,7 @@ class TaskManager:
 
         # Update the widget for the task item
         widget = TaskItemWidget(
-            taskData["taskText"],
+            taskData["title"],
             taskData["dueDate"],
             taskData["dueTime"],
             taskData["priority"],
@@ -121,7 +121,7 @@ class TaskManager:
         for taskData in tasks:
             item = QListWidgetItem()
             widget = TaskItemWidget(
-                taskData["taskText"],
+                taskData["title"],
                 taskData["dueDate"],
                 taskData["dueTime"],
                 taskData["priority"],

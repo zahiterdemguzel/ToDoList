@@ -30,7 +30,7 @@ class TaskDetailPanel(QWidget):
         self.deselectButton.clicked.connect(self.deselectTask)
 
         deselectButtonLayout = QHBoxLayout()
-        deselectButtonLayout.setAlignment(Qt.AlignLeft)
+        deselectButtonLayout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         deselectButtonLayout.addWidget(self.deselectButton)
 
         self.headerLayout.addLayout(deselectButtonLayout)
@@ -39,11 +39,11 @@ class TaskDetailPanel(QWidget):
         self.formLayout = QVBoxLayout()
 
         self.taskInput = QLineEdit()
-        self.formLayout.addWidget(self.createFormItem("Task:", self.taskInput))
+        self.formLayout.addWidget(self.createFormItem("Title:", self.taskInput))
 
         self.descriptionInput = QTextEdit()
         self.formLayout.addWidget(
-            self.createFormItem("Description:", self.descriptionInput)
+            self.createFormItem("Description:", self.descriptionInput, vertical=True)
         )
 
         self.dueDateEdit = QDateEdit(QDate.currentDate())
@@ -82,8 +82,11 @@ class TaskDetailPanel(QWidget):
 
         self.setLayout(self.layout)
 
-    def createFormItem(self, label, widget):
-        layout = QHBoxLayout()
+    def createFormItem(self, label, widget, vertical=False):
+        if not vertical:
+            layout = QHBoxLayout()
+        else:
+            layout = QVBoxLayout()
         layout.addWidget(QLabel(label))
         layout.addWidget(widget)
         formItem = QWidget()
@@ -91,7 +94,7 @@ class TaskDetailPanel(QWidget):
         return formItem
 
     def loadTask(self, taskData):
-        self.taskInput.setText(taskData["taskText"])
+        self.taskInput.setText(taskData["title"])
         self.descriptionInput.setText(taskData["description"])
         self.dueDateEdit.setDate(QDate.fromString(taskData["dueDate"], "yyyy-MM-dd"))
         self.dueTimeEdit.setTime(taskData["dueTime"])
@@ -104,7 +107,7 @@ class TaskDetailPanel(QWidget):
 
     def saveTask(self):
         taskData = {
-            "taskText": self.taskInput.text(),
+            "title": self.taskInput.text(),
             "description": self.descriptionInput.toPlainText(),
             "dueDate": self.dueDateEdit.date().toString("yyyy-MM-dd"),
             "dueTime": self.dueTimeEdit.time(),

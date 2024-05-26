@@ -6,7 +6,7 @@
         "dueDate": "2024-05-25",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "dsadasss"
+        "title": "dsadasss"
     },
     {
         "category": "",
@@ -15,7 +15,7 @@
         "dueDate": "2024-05-20",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "dssa"
+        "title": "dssa"
     },
     {
         "category": "personal",
@@ -24,7 +24,7 @@
         "dueDate": "2024-06-07",
         "dueTime": "23:00",
         "priority": "High",
-        "taskText": "hhhh"
+        "title": "hhhh"
     },
     {
         "category": "",
@@ -33,7 +33,7 @@
         "dueDate": "2024-05-25",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "title"
+        "title": "title"
     },
     {
         "category": "",
@@ -42,6 +42,6 @@
         "dueDate": "2024-05-26",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "dsadasdadsadadasdadadad"
+        "title": "dsadasdadsadadasdadadad"
     }
 ]

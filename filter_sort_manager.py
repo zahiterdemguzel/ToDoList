@@ -36,11 +36,11 @@ class FilterSortManager:
             item = self.taskList.item(i)
             taskData = item.data(Qt.UserRole)
 
-            taskText = taskData["taskText"].lower()
+            title = taskData["title"].lower()
             description = taskData["description"].lower()
             tag = taskData["category"].lower()
 
-            if searchText in taskText or searchText in description or searchText in tag:
+            if searchText in title or searchText in description or searchText in tag:
                 if filterText == "All":
                     item.setHidden(False)
                 elif filterText == "Completed" and taskData["completed"]:
@@ -62,7 +62,7 @@ class FilterSortManager:
             tasks.append((item, item.data(Qt.UserRole)))
 
         if sortText == "Sort by Name":
-            tasks.sort(key=lambda x: x[1]["taskText"])
+            tasks.sort(key=lambda x: x[1]["title"])
         elif sortText == "Sort by Date":
             tasks.sort(
                 key=lambda x: (x[1]["dueDate"], x[1]["dueTime"].toString("HH:mm"))
@@ -76,7 +76,7 @@ class FilterSortManager:
             newItem = QListWidgetItem()
             newItem.setData(Qt.UserRole, taskData)
             widget = TaskItemWidget(
-                taskData["taskText"],
+                taskData["title"],
                 taskData["dueDate"],
                 taskData["dueTime"],  # Include dueTime
                 taskData["priority"],

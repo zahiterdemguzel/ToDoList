@@ -6,7 +6,7 @@
         "dueDate": "2024-05-21",
         "dueTime": "16:15",
         "priority": "High",
-        "taskText": "Fe-zeg date"
+        "title": "Fe-zeg date"
     },
     {
         "category": "okul",
@@ -15,7 +15,25 @@
         "dueDate": "2024-05-22",
         "dueTime": "00:00",
         "priority": "High",
-        "taskText": "Poster \u00c7\u0131kart"
+        "title": "Poster \u00c7\u0131kart"
+    },
+    {
+        "category": "okul",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-05-25",
+        "dueTime": "00:00",
+        "priority": "High",
+        "title": "hocaya poster maili at"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-22",
+        "dueTime": "00:00",
+        "priority": "High",
+        "title": "Fi\u015fleri g\u00f6nder"
     },
     {
         "category": "",
@@ -24,16 +42,25 @@
         "dueDate": "2024-05-31",
         "dueTime": "00:00",
         "priority": "High",
-        "taskText": "Video \u00e7ek okul"
+        "title": "Sys security Project"
     },
     {
         "category": "",
-        "completed": false,
+        "completed": true,
         "description": "",
-        "dueDate": "2024-05-25",
+        "dueDate": "2024-05-31",
         "dueTime": "00:00",
         "priority": "High",
-        "taskText": "Mustafa hocaya poster maili at"
+        "title": "Data Mining Project"
+    },
+    {
+        "category": "okul",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-31",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "title": "Video \u00e7ek okul"
     },
     {
         "category": "i\u015f",
@@ -42,7 +69,7 @@
         "dueDate": "2024-05-21",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Winlaunch UI"
+        "title": "Winlaunch UI"
     },
     {
         "category": "i\u015f",
@@ -51,16 +78,16 @@
         "dueDate": "2024-05-22",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Winlaunch Settings"
+        "title": "Winlaunch Settings"
     },
     {
-        "category": "",
+        "category": "i\u015f",
         "completed": false,
         "description": "for add,\nremove,edit contacts",
         "dueDate": "2024-05-22",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Winlaunch people UI "
+        "title": "Winlaunch people UI "
     },
     {
         "category": "",
@@ -69,7 +96,7 @@
         "dueDate": "2024-06-07",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Kids Project Debug"
+        "title": "Kids Project Debug"
     },
     {
         "category": "",
@@ -78,25 +105,16 @@
         "dueDate": "2024-05-24",
         "dueTime": "00:00",
         "priority": "Medium",
-        "taskText": "Emre Abi G\u00f6r\u00fc\u015fme"
+        "title": "Emre Abi G\u00f6r\u00fc\u015fme"
     },
     {
         "category": "i\u015f",
         "completed": false,
-        "description": "",
+        "description": "cevaps\u0131z",
         "dueDate": "2024-05-23",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "Kai Avatar\u0131"
-    },
-    {
-        "category": "i\u015f",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-22",
-        "dueTime": "00:00",
-        "priority": "Low",
-        "taskText": "Fi\u015fleri g\u00f6nder"
+        "title": "Kai Avatar\u0131"
     },
     {
         "category": "",
@@ -105,7 +123,7 @@
         "dueDate": "2024-05-20",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "\u0130mza at"
+        "title": "\u0130mza at"
     },
     {
         "category": "i\u015f",
@@ -114,6 +132,6 @@
         "dueDate": "2024-05-21",
         "dueTime": "00:00",
         "priority": "Low",
-        "taskText": "Scoreboard Unity"
+        "title": "Scoreboard Unity"
     }
 ]
