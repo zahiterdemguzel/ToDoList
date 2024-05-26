@@ -27,6 +27,15 @@
         "taskText": "Video \u00e7ek okul"
     },
     {
+        "category": "",
+        "completed": false,
+        "description": "",
+        "dueDate": "2024-05-25",
+        "dueTime": "00:00",
+        "priority": "High",
+        "taskText": "Mustafa hocaya poster maili at"
+    },
+    {
         "category": "i\u015f",
         "completed": true,
         "description": "",
@@ -64,7 +73,7 @@
     },
     {
         "category": "",
-        "completed": false,
+        "completed": true,
         "description": "",
         "dueDate": "2024-05-24",
         "dueTime": "00:00",
@@ -106,14 +115,5 @@
         "dueTime": "00:00",
         "priority": "Low",
         "taskText": "Scoreboard Unity"
-    },
-    {
-        "category": "",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-25",
-        "dueTime": "00:00",
-        "priority": "High",
-        "taskText": "Mustafa hocaya poster maili at"
     }
 ]

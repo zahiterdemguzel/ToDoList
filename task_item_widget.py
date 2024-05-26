@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QToolTip,
     QCheckBox,
     QSizePolicy,
+    QGridLayout,
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
@@ -34,7 +35,7 @@ class TaskItemWidget(QWidget):
         self.layout.setContentsMargins(10, 20, 10, 20)
         self.layout.setSpacing(15)
 
-        self.headerLayout = QHBoxLayout()
+        self.headerLayout = QGridLayout()
 
         # Checkbox to mark task as completed
         self.completedCheckbox = QCheckBox()
@@ -69,14 +70,12 @@ class TaskItemWidget(QWidget):
         if completed:
             self.applyStrikeThrough()
 
-        # Adjust spacing between checkbox and text
-        self.headerLayout.addWidget(self.completedCheckbox)
-        self.headerLayout.addSpacing(5)
-
-        self.headerLayout.addWidget(self.taskLabel)
-        self.headerLayout.addWidget(self.dueDateLabel)
-        self.headerLayout.addWidget(self.priorityLabel)
-        self.headerLayout.addWidget(self.categoryLabel)
+        # Add widgets to the grid layout
+        self.headerLayout.addWidget(self.completedCheckbox, 0, 0)
+        self.headerLayout.addWidget(self.taskLabel, 0, 1)
+        self.headerLayout.addWidget(self.dueDateLabel, 0, 2)
+        self.headerLayout.addWidget(self.priorityLabel, 0, 3)
+        self.headerLayout.addWidget(self.categoryLabel, 0, 4)
 
         self.layout.addLayout(self.headerLayout)
         self.setLayout(self.layout)

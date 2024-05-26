@@ -20,6 +20,10 @@ from PyQt5.QtGui import QIcon
 from settings_dialog import SettingsDialog  # Make sure to import the new dialog
 
 
+# Add import for TaskDetailPanel
+from task_detail_panel import TaskDetailPanel
+
+
 class ToDoListApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -45,13 +49,14 @@ class ToDoListApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle("To-Do List Application")
-        self.setGeometry(300, 300, 700, 600)
+        self.setGeometry(300, 300, 900, 600)  # Adjust window size for the new panel
 
-        self.layout = QVBoxLayout()
+        self.layout = QHBoxLayout()  # Change main layout to horizontal
+        self.mainLayout = QVBoxLayout()
 
         self.searchBar = QLineEdit(self)
         self.searchBar.setPlaceholderText("Search tasks...")
-        self.layout.addWidget(self.searchBar)
+        self.mainLayout.addWidget(self.searchBar)
 
         self.buttonLayout = QHBoxLayout()
 
@@ -85,12 +90,20 @@ class ToDoListApp(QWidget):
 
         self.buttonLayout.addWidget(self.settingsButton)
 
-        self.layout.addLayout(self.buttonLayout)
+        self.mainLayout.addLayout(self.buttonLayout)
 
         self.taskList = QListWidget(self)
+        self.taskList.itemClicked.connect(self.showTaskDetail)
         self.taskList.itemDoubleClicked.connect(self.editTask)
 
-        self.layout.addWidget(self.taskList)
+        self.mainLayout.addWidget(self.taskList)
+
+        self.layout.addLayout(self.mainLayout)  # Add main layout to the left side
+
+        self.taskDetailPanel = TaskDetailPanel(self)  # Create TaskDetailPanel
+        self.layout.addWidget(
+            self.taskDetailPanel
+        )  # Add TaskDetailPanel to the right side
 
         self.setLayout(self.layout)
 
@@ -100,6 +113,20 @@ class ToDoListApp(QWidget):
 
         # Connect the search bar to the search function
         self.searchBar.textChanged.connect(self.searchTasks)
+
+    def showTaskDetail(self, item):
+        taskData = item.data(Qt.UserRole)
+        self.taskDetailPanel.loadTask(taskData)
+
+    def updateSelectedTask(self, updatedTaskData):
+        selectedItem = self.taskList.currentItem()
+        if selectedItem:
+            self.taskManager.editTask(selectedItem, updatedTaskData)
+            self.filterSortManager.sortAndFilterTasks()
+
+    def deselectCurrentTask(self):
+        self.taskList.clearSelection()
+        self.taskDetailPanel.hide()
 
     def showSettingsDialog(self):
         dialog = SettingsDialog(self.configManager, self)

@@ -1,9 +1,10 @@
 {
-    "highPriorityColor": "#ffffff",
+    "highPriorityColor": "#ff0000",
     "highlightDeadline": false,
     "dayRange": 2,
     "dueDateVisibility": false,
     "dueTimeVisibility": true,
     "categoryVisibility": true,
-    "priorityVisibility": true
+    "priorityVisibility": true,
+    "enableSidePanel": true
 }

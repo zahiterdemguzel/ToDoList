@@ -8,5 +8,6 @@
     "dueDateVisibility": true,
     "dueTimeVisibility": true,
     "categoryVisibility": true,
-    "priorityVisibility": true
+    "priorityVisibility": true,
+    "enableSidePanel": false
 }

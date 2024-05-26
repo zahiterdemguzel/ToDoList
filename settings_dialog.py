@@ -22,6 +22,9 @@ class SettingsDialog(QDialog):
         super().__init__(parent)
         self.configManager = configManager
         self.setWindowTitle("Settings")
+        self.setWindowFlags(
+            self.windowFlags() & ~Qt.WindowCloseButtonHint
+        )  # Hide the close button
         self.initUI()
         self.loadSettings()  # Load settings when initializing the UI
 
@@ -55,6 +58,11 @@ class SettingsDialog(QDialog):
         taskListLayout = QVBoxLayout()
 
         layout = QVBoxLayout()
+
+        self.enableSidePanelCheck = QCheckBox("Enable side panel")
+        self.enableSidePanelCheck.setChecked(
+            self.configManager.get("enableSidePanel", False)
+        )
 
         self.highlightDeadlineCheck = QCheckBox("Highlight deadline when near")
         self.highlightDeadlineCheck.stateChanged.connect(self.toggleDayRange)
@@ -119,6 +127,7 @@ class SettingsDialog(QDialog):
         colorLayout.addRow(self.highColorButton, self.highPriorityColorLabel)
         colorFrame.setLayout(colorLayout)
 
+        layout.addWidget(self.enableSidePanelCheck)  # Add the new checkbox
         layout.addLayout(highlightLayout)
         layout.addWidget(visibilityFrame)
         layout.addWidget(colorFrame)
@@ -144,6 +153,7 @@ class SettingsDialog(QDialog):
         label.setText(color)
 
     def applySettings(self):
+        self.configManager.set("enableSidePanel", self.enableSidePanelCheck.isChecked())
         self.configManager.set(
             "highlightDeadline", self.highlightDeadlineCheck.isChecked()
         )
@@ -155,6 +165,9 @@ class SettingsDialog(QDialog):
         self.configManager.saveConfig()  # Ensure settings are saved
 
     def loadSettings(self):
+        self.enableSidePanelCheck.setChecked(
+            self.configManager.get("enableSidePanel", False)
+        )
         self.highlightDeadlineCheck.setChecked(
             self.configManager.get("highlightDeadline", False)
         )
