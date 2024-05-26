@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
     QDialog,
     QLineEdit,
 )
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QSize
 from task_manager import TaskManager
 from task_dialog import TaskDialog
 from filter_sort_manager import FilterSortManager
@@ -86,9 +86,11 @@ class ToDoListApp(QWidget):
 
         self.settingsButton = QPushButton("", self)
         self.settingsButton.setIcon(QIcon("Resources/settings.png"))
-        self.settingsButton.clicked.connect(self.showSettingsDialog)
-
+        self.settingsButton.setFixedSize(
+            35, 35
+        )  # Set fixed size for the settings button
         self.buttonLayout.addWidget(self.settingsButton)
+        self.settingsButton.clicked.connect(self.showSettingsDialog)
 
         self.mainLayout.addLayout(self.buttonLayout)
 
@@ -101,6 +103,7 @@ class ToDoListApp(QWidget):
         self.layout.addLayout(self.mainLayout)  # Add main layout to the left side
 
         self.taskDetailPanel = TaskDetailPanel(self)  # Create TaskDetailPanel
+        self.taskDetailPanel.hide()  # Hide initially
         self.layout.addWidget(
             self.taskDetailPanel
         )  # Add TaskDetailPanel to the right side
@@ -117,6 +120,7 @@ class ToDoListApp(QWidget):
     def showTaskDetail(self, item):
         taskData = item.data(Qt.UserRole)
         self.taskDetailPanel.loadTask(taskData)
+        self.taskDetailPanel.show()  # Show panel when task is selected
 
     def updateSelectedTask(self, updatedTaskData):
         selectedItem = self.taskList.currentItem()
