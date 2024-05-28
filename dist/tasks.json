@@ -27,22 +27,13 @@
         "title": "hocaya poster maili at"
     },
     {
-        "category": "i\u015f",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-22",
-        "dueTime": "00:00",
-        "priority": "High",
-        "title": "Fi\u015fleri g\u00f6nder"
-    },
-    {
         "category": "",
-        "completed": false,
-        "description": "",
-        "dueDate": "2024-05-31",
+        "completed": true,
+        "description": "https://colab.research.google.com/drive/1v6hHGYFy9ZVetHwUUrpKsd6ImaVEQTsN?usp=sharing",
+        "dueDate": "2024-05-27",
         "dueTime": "00:00",
         "priority": "High",
-        "title": "Sys security Project"
+        "title": "Data Mining Project g\u00f6nder"
     },
     {
         "category": "",
@@ -51,16 +42,25 @@
         "dueDate": "2024-05-31",
         "dueTime": "00:00",
         "priority": "High",
-        "title": "Data Mining Project"
+        "title": "Sys security Project"
     },
     {
-        "category": "okul",
+        "category": "i\u015f",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-05-27",
+        "dueTime": "17:00",
+        "priority": "High",
+        "title": "i\u015f g\u00f6r\u00fc\u015fmesi webex"
+    },
+    {
+        "category": "",
         "completed": false,
         "description": "",
-        "dueDate": "2024-05-31",
-        "dueTime": "00:00",
-        "priority": "Medium",
-        "title": "Video \u00e7ek okul"
+        "dueDate": "2024-05-28",
+        "dueTime": "23:00",
+        "priority": "High",
+        "title": "Sys Security G\u00f6r\u00fc\u015fmesi "
     },
     {
         "category": "i\u015f",
@@ -93,28 +93,28 @@
         "category": "",
         "completed": true,
         "description": "",
-        "dueDate": "2024-06-07",
-        "dueTime": "00:00",
-        "priority": "Medium",
-        "title": "Kids Project Debug"
-    },
-    {
-        "category": "",
-        "completed": true,
-        "description": "",
         "dueDate": "2024-05-24",
         "dueTime": "00:00",
         "priority": "Medium",
         "title": "Emre Abi G\u00f6r\u00fc\u015fme"
     },
     {
-        "category": "i\u015f",
+        "category": "okul",
         "completed": false,
-        "description": "cevaps\u0131z",
-        "dueDate": "2024-05-23",
+        "description": "",
+        "dueDate": "2024-05-31",
         "dueTime": "00:00",
-        "priority": "Low",
-        "title": "Kai Avatar\u0131"
+        "priority": "Medium",
+        "title": "Video \u00e7ek okul"
+    },
+    {
+        "category": "",
+        "completed": true,
+        "description": "",
+        "dueDate": "2024-06-07",
+        "dueTime": "00:00",
+        "priority": "Medium",
+        "title": "Kids Project Debug"
     },
     {
         "category": "",
@@ -133,5 +133,14 @@
         "dueTime": "00:00",
         "priority": "Low",
         "title": "Scoreboard Unity"
+    },
+    {
+        "category": "i\u015f",
+        "completed": false,
+        "description": "cevaps\u0131z",
+        "dueDate": "2024-05-23",
+        "dueTime": "00:00",
+        "priority": "Low",
+        "title": "Kai Avatar\u0131"
     }
 ]

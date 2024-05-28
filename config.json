@@ -1,13 +1,28 @@
 {
     "filter": "Not Completed",
-    "sort": "Sort by Name",
-    "mediumPriorityColor": "#a5fff5",
-    "highPriorityColor": "#ffc157",
+    "sort": "Sort by Priority",
+    "mediumPriorityColor": "#ffed2c",
+    "highPriorityColor": "#ff7626",
     "highlightDeadline": false,
     "dayRange": 1,
     "dueDateVisibility": true,
     "dueTimeVisibility": true,
     "categoryVisibility": true,
     "priorityVisibility": true,
-    "enableSidePanel": false
+    "enableSidePanel": false,
+    "enableDoubleClick": true,
+    "enableNotifications": true,
+    "remindHighPriority": true,
+    "remindMediumPriority": false,
+    "remindLowPriority": false,
+    "notificationOffsets": [
+        {
+            "type": "hours",
+            "value": 1
+        },
+        {
+            "type": "days",
+            "value": 1
+        }
+    ]
 }

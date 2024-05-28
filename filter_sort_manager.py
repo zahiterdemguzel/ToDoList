@@ -89,7 +89,9 @@ class FilterSortManager:
             newItem.setSizeHint(widget.sizeHint())
             self.taskList.addItem(newItem)
             self.taskList.setItemWidget(newItem, widget)
-            TaskManager(self.taskList).setItemColor(newItem, taskData["priority"])
+            TaskManager(self.taskList, self.configManager).setItemColor(
+                newItem, taskData["priority"]
+            )
 
         self.filterTasks()  # Ensure tasks are filtered after sorting
 

@@ -1,13 +1,15 @@
-from PyQt5.QtWidgets import QListWidgetItem
+from PyQt5.QtWidgets import QListWidgetItem, QListWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from task_item_widget import TaskItemWidget
 from utils import saveTasks, loadTasks
+from configuration_manager import ConfigurationManager
 
 
 class TaskManager:
-    def __init__(self, taskList):
+    def __init__(self, taskList: QListWidget, configManager: ConfigurationManager):
         self.taskList = taskList
+        self.configManager = configManager
         self.filterSortManager = None  # To be set by ToDoListApp
 
     def addTask(
@@ -101,12 +103,19 @@ class TaskManager:
             self.filterSortManager.sortAndFilterTasks()
 
     def setItemColor(self, item, priority):
+
         if priority == "High":
-            item.setBackground(QColor(255, 153, 153))  # Pastel red
+            item.setBackground(
+                QColor(self.configManager.get("highPriorityColor", default="#FF9999"))
+            )
         elif priority == "Medium":
-            item.setBackground(QColor(255, 255, 153))  # Pastel yellow
+            item.setBackground(
+                QColor(self.configManager.get("mediumPriorityColor", default="#FFFF99"))
+            )
         elif priority == "Low":
-            item.setBackground(QColor(153, 255, 153))  # Pastel green
+            item.setBackground(
+                QColor(self.configManager.get("lowPriorityColor", default="#CCFFCC"))
+            )
 
     def saveTasks(self):
         tasks = []

@@ -30,7 +30,7 @@ class ToDoListApp(QWidget):
         self.initUI()
 
         self.configManager = ConfigurationManager()
-        self.taskManager = TaskManager(self.taskList)
+        self.taskManager = TaskManager(self.taskList, self.configManager)
         self.filterSortManager = FilterSortManager(
             self.taskList,
             self.filterComboBox,
@@ -136,6 +136,8 @@ class ToDoListApp(QWidget):
         dialog = SettingsDialog(self.configManager, self)
         dialog.exec_()
         self.applySettings()  # Apply settings after dialog is closed
+        # reload tasks
+        self.filterSortManager.sortAndFilterTasks()
 
     def applySettings(self):
         # You can add your logic here to apply the settings to the application
