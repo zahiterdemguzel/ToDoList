@@ -42,20 +42,18 @@ jobs:
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       with:
         tag_name: ${{ github.ref_name }}  # Use the pushed tag as the release tag
         release_name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
+        token: ${{ secrets.PAT_TOKEN }}
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: macos-executable.tar.gz
         asset_name: macos-executable.tar.gz
         asset_content_type: application/gzip
+        token: ${{ secrets.PAT_TOKEN }}
