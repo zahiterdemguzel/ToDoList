@@ -24,7 +24,7 @@ jobs:
 
     - name: Build executable
       run: |
-        pyinstaller --windowed --onefile --icon=icon.ico main.py
+        pyinstaller --windowed --onefile main.py
 
     - name: Create archive
       run: |
