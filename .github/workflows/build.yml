@@ -41,11 +41,10 @@ jobs:
 
     - name: Get latest release
       id: get_latest_release
-      uses: octokit/request-action@v2.0.21
+      uses: octokit/request-action@v2.x
       with:
         route: GET /repos/${{ github.repository }}/releases/latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN }}
 
     - name: Upload Release Asset
       env:
