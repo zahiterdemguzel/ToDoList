@@ -1,11 +1,9 @@
-name: Build macOS Executable
+name: AutoRelease
 
 on:
   push:
     branches:
-      - main
-    tags:
-      - 'v*'  # Run this workflow when a new tag is pushed
+      - main  # Run this workflow when there is a push to the main branch
 
 jobs:
   build:
@@ -39,19 +37,24 @@ jobs:
         name: macos-executable
         path: macos-executable.tar.gz
 
-    - name: Get latest release
-      id: get_latest_release
-      uses: octokit/request-action@v2.x
+    - name: Create or Update GitHub Release
+      id: create_release
+      uses: CupOfTea696/gh-action-auto-release@v1.0.0
       with:
-        route: GET /repos/${{ github.repository }}/releases/latest
-        token: ${{ secrets.PAT_TOKEN }}
+        title: "Release: $version"
+        tag: "v$semver"
+        draft: false
+        changelog: CHANGELOG.md
+        changelog-entry: $version
+        regex: "/^Release: #{semver}$/i"
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
     - name: Upload Release Asset
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
-        LATEST_RELEASE_ID=$(echo "${{ steps.get_latest_release.outputs.data }}" | jq -r '.id')
-        UPLOAD_URL=$(echo "${{ steps.get_latest_release.outputs.data }}" | jq -r '.upload_url' | sed 's/{?name,label}//')
+        UPLOAD_URL=$(echo "${{ steps.create_release.outputs.upload_url }}" | sed 's/{?name,label}//')
         curl -XPOST -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/gzip" \
             --data-binary @macos-executable.tar.gz \
